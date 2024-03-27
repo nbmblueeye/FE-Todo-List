@@ -1,0 +1,29 @@
+{
+  "name": "fe-todo-list",
+  "version": "1.0.0",
+  "description": "ability test FE",
+  "main": "server.js",
+  "scripts": {
+    "start": "node backend/server.js",
+    "server": "nodemon backend/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nbmblueeye/FE-Todo-List.git"
+  },
+  "author": "nbmblueeye",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nbmblueeye/FE-Todo-List/issues"
+  },
+  "homepage": "https://github.com/nbmblueeye/FE-Todo-List#readme",
+  "dependencies": {
+    "colors": "^1.4.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mongoose": "^8.2.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}
