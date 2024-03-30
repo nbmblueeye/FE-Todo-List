@@ -42,7 +42,6 @@ const getTask = createAsyncThunk(
 
 const editTask = createAsyncThunk(
     "tasks/editTask", async(data:TaskType, thunkAPI) => {
-        console.log(data)
         try {
             const response = await taskAPI.putTask(data);
             return response.data;
