@@ -4,7 +4,6 @@ import { TaskType } from '../../types/TaskType';
 
 
 const getTasks = createAsyncThunk(
-
     "tasks/getTasks", async(slug:string, thunkAPI) => {
         try {
             const response = await taskAPI.getTasks(slug);
@@ -14,11 +13,9 @@ const getTasks = createAsyncThunk(
             return thunkAPI.rejectWithValue(message)
         }
     }
-    
 );
 
 const createTask = createAsyncThunk(
-
     "tasks/createTask", async(task:TaskType, thunkAPI) => {
         try {
             const response = await taskAPI.postTask(task);
@@ -28,11 +25,9 @@ const createTask = createAsyncThunk(
             return thunkAPI.rejectWithValue(message)
         }
     }
-    
 );
 
 const getTask = createAsyncThunk(
-
     "tasks/getTask", async(id:string, thunkAPI) => {
         try {
             const response = await taskAPI.getTask(id);
@@ -46,17 +41,16 @@ const getTask = createAsyncThunk(
 );
 
 const editTask = createAsyncThunk(
-
-    "tasks/editTask", async({id, data}:{id:string, data:TaskType}, thunkAPI) => {
+    "tasks/editTask", async(data:TaskType, thunkAPI) => {
+        console.log(data)
         try {
-            const response = await taskAPI.putTask(id, data);
+            const response = await taskAPI.putTask(data);
             return response.data;
         } catch (error:any) {
             let message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
             return thunkAPI.rejectWithValue(message)
         }
     }
-    
 );
 
 const deleteTask = createAsyncThunk(

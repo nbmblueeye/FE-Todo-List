@@ -1,6 +1,4 @@
 import axios from "axios";
-import { TaskType } from "../../types/TaskType";
-
 
 const API_URL = "/api/todos/";
 
@@ -17,8 +15,8 @@ const getTasks = async (slug:string) => {
     return response;
 }
 
-const postTask = async (task:TaskType) => {
-    const response = await axios.post(API_URL,task);
+const postTask = async ({id, ...task}:{id:string}) => {
+    const response = await axios.post(API_URL, task);
     return response;
 }
 
@@ -27,7 +25,7 @@ const getTask = async (id:string) => {
     return response;
 }
 
-const putTask = async (id:string, task:TaskType) => {
+const putTask = async ({id,...task}:{id:string}) => {
     const response = await axios.put(`${API_URL}${id}`, task);
     return response;
 }

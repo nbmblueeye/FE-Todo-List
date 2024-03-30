@@ -1,6 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { createTask, deleteTask, editTask, getTask, getTasks } from "../services/taskService";
 import { TaskType } from "../../types/TaskType";
+import { arrayMove } from "@dnd-kit/sortable";
 
 
 type Props = {
@@ -24,6 +25,11 @@ const initialState = {
     tasks: [],
     filters:[]
 } as Props;
+
+type DragIndex = {
+  activeId: string,
+  overId: string
+}
 
 
 const taskSlide = createSlice({
@@ -52,6 +58,11 @@ const taskSlide = createSlice({
             state.filters = state.tasks
             break;
         }
+      },
+      setTasks:(state, action: PayloadAction<DragIndex>) => {
+          const oldIndex = state.tasks.findIndex((task) => task.id === action.payload.activeId);
+          const newIndex = state.tasks.findIndex((task) => task.id === action.payload.overId);
+          state.tasks = arrayMove(state.tasks, oldIndex, newIndex);
       }
     },
     extraReducers: (builder) => {
@@ -61,7 +72,14 @@ const taskSlide = createSlice({
         builder.addCase(getTasks.fulfilled, (state, action:any) => {
           state.isLoading = false;
           state.isSuccess = true;
-          state.tasks = action.payload;
+          state.tasks = action.payload.map((task:any) => ({
+            id: task._id,
+            title: task.title,
+            description: task.description,
+            status: task.status,
+            deadline: task.deadline,
+          })
+          );
         }),
         builder.addCase(getTasks.rejected, (state, action:any) => {
           state.isLoading = false;
@@ -76,7 +94,13 @@ const taskSlide = createSlice({
           state.isLoading = false;
           state.isError = false;
           state.isSuccess = true;
-          state.tasks.push(action.payload.newTask);
+          state.tasks = [...state.tasks, {
+            id:action.payload.newTask._id,
+            title: action.payload.newTask.title, 
+            description: action.payload.newTask.description, 
+            deadline: action.payload.newTask.deadline, 
+            status:action.payload.newTask.status
+          }];
           state.message = action.payload.message;
         }),
         builder.addCase(createTask.rejected, (state, action:any) => {
@@ -93,7 +117,7 @@ const taskSlide = createSlice({
           state.isError = false;
           state.isSuccess = true;
           state.message = action.payload.message;
-          state.tasks = state.tasks.filter(task => task._id != action.payload.id)
+          state.tasks = state.tasks.filter(task => task.id != action.payload.id)
         }),
         builder.addCase(deleteTask.rejected, (state, action:any) => {
           state.isError = true;
@@ -109,7 +133,7 @@ const taskSlide = createSlice({
           state.isError = false;
           state.isSuccess = true;
           state.task = {
-            _id:action.payload._id,
+            id:action.payload.id,
             title: action.payload.title, 
             description: action.payload.description, 
             deadline: action.payload.deadline, 
@@ -124,6 +148,7 @@ const taskSlide = createSlice({
         }),
 
         builder.addCase(editTask.pending, (state) => {
+          state.isLoading = false;
           state.isUpdating = true
         }),
         builder.addCase(editTask.fulfilled, (state, action:any) => {
@@ -142,6 +167,6 @@ const taskSlide = createSlice({
       },
 })
 
-export const { reset, filter } = taskSlide.actions;
+export const { reset, filter, setTasks } = taskSlide.actions;
 
 export default taskSlide.reducer;

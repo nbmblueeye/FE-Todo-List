@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom"
-import { Button } from "./index";
+import { SquareButton } from "./index";
 import { useEffect, useState } from "react";
 
 const Header = () => {
@@ -35,7 +35,7 @@ const Header = () => {
     <header className="w-full bg-primary">
       <div className="container max-w-[600px] p-4 mx-auto flex justify-between items-center">
         <h1 className="text-white-100 text-3xl font-black">{headerTitleText}</h1>
-        <Button btnType="button" bgColor="bg-white-100" textColor="text-blue-600" text={`${headerButtonText}`} buttonFunc={navigationFunc}/>
+        <SquareButton btnType="button" bgColor="bg-white-100" textColor="text-blue-600" text={`${headerButtonText}`} loadingText="" buttonFunc={navigationFunc}/>
       </div>
     </header>
   )
