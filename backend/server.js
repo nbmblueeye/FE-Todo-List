@@ -17,18 +17,15 @@ app.use('/api/todos', require('./routes/todoRoutes'));
 
 //Serve frontend
 if(process.env.NODE_ENV === 'production'){
-//     app.use(express.static(path.join(__dirname, "../frontend/dist")));
-//     app.get('*', (req, res) => 
-//    { 
-//         res.sendFile(
-//             path.resolve(__dirname, '../', 'frontend', 'dist', 'index.html')
-//         )
-//         res.status(200).json({
-//             message: 'Hello from DALL.E!',
-//         });
-//     } 
-//)
-    app.get('/', (req, res) => res.send("Hello from DALL.E!"))
+    app.use(express.static(path.join(__dirname, "../frontend/dist")));
+    app.get('*', (req, res) => 
+   { 
+        res.sendFile(
+            path.resolve(__dirname, '../', 'frontend', 'dist', 'index.html')
+        )
+        res.send("Serve connection")
+    } 
+)
 }else{
     app.get('/', (req, res) => res.send("Please set to production"))
 }
