@@ -5,6 +5,7 @@ const dotenv = require('dotenv').config();
 const colors = require('colors');
 const connectToDB = require('./config/db');
 const port = process.env.PORT || 5000;
+const cors = require('cors');
 
 connectToDB();
 
