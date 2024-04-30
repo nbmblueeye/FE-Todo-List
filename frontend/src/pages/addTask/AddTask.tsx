@@ -39,21 +39,20 @@ const AddTask = () => {
         dispatch(createTask(form)); 
     }  
 
-    useEffect(() => {
+    useEffect(() => { 
         if(isSuccess) {
-            setForm(prevState => ({...prevState,...{
+            setForm({
                 id:"",
                 title:"",
                 description:"",
                 status: false,
                 deadline: dayjs(new Date()).format('lll'),
-            }}));
+            })
         }
     }, [isSuccess])
     
-
   return (
-    <div className={`${styles.container}`}>  
+    <div className={`${styles.container} p-4`}>  
         <form className={`w-full p-8 bg-white-100 ${styles.border}`} onSubmit={(e) => addTaskHandler(e)}>
             {
                 message && 

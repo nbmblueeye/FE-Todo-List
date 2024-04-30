@@ -25,7 +25,7 @@ if(process.env.NODE_ENV === 'production'){
         res.sendFile(
             path.resolve(__dirname, '../', 'frontend', 'dist', 'index.html')
         )
-        res.send("Serve connection")
+        res.send("Server connection")
     } 
 )
 }else{

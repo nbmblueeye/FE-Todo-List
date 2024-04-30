@@ -62,7 +62,7 @@ const EditTask = () => {
     }
 
   return (
-    <div className={`${styles.container}`}>
+    <div className={`${styles.container} p-4`}>
         {
             Object.keys(task).length > 0 &&
             <form className={`w-full p-8 bg-white-100 ${styles.border}`} onSubmit={(e) => editTaskHandler(e)}>
